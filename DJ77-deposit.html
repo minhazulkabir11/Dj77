@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DJ77 - জমা দিন</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f4f4;color:#222;font-family:Arial,"Noto Sans Bengali",sans-serif}
+.phone{max-width:430px;min-height:100vh;margin:0 auto;background:#fff;box-shadow:0 0 12px #00000012}
+header{height:56px;background:#ffd400;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:700;color:#171717}
+main{padding:15px 13px 26px}
+.section-title{font-size:16px;font-weight:700;margin:2px 0 12px}
+.payments{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pay{height:76px;border:1px solid #e4e4e4;border-radius:7px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;position:relative}
+.pay.selected{border:2px solid #ed4b91;background:#fff8fb}
+.logo{height:29px;min-width:43px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;padding:0 5px}
+.brand-logo{height:34px;min-width:76px;display:flex;align-items:center;justify-content:center;gap:1px;font-weight:900;letter-spacing:-.8px}
+.brand-logo.bk{background:#e2136e;color:#fff;border-radius:5px;padding:0 7px;font-size:18px}
+.bk-mark{font-size:24px;font-style:italic;line-height:1}
+.bk-word{font-size:17px}
+.brand-logo.ng{background:#f58220;color:#fff;border-radius:5px;padding:0 6px;font-size:17px}
+.ng-mark{font-size:18px;transform:rotate(15deg);line-height:1}
+.ng-word{font-size:19px;font-weight:900}
+.us{background:#263b69}.other{background:#168d63}
+.pay small{font-size:11px;font-weight:700}
+.usdt-row{display:flex;margin-top:9px}
+.usdt-row .pay{width:calc((100% - 24px)/4)}
+.amount-title{font-size:16px;font-weight:700;margin:23px 0 12px}
+.amounts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.amount{height:43px;border:1px solid #dedede;border-radius:5px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#333}
+.amount.selected{border:2px solid #ed4b91;color:#e63d86;background:#fff8fb}
+.custom{width:100%;height:43px;margin-top:10px;border:1px solid #ed4b91;border-radius:5px;background:#fff;text-align:left;padding:0 12px;font-size:14px;color:#777}
+.warning{margin:16px 1px 18px;color:#e53935;font-size:12px;line-height:1.55}
+.next{height:45px;width:100%;border:0;border-radius:5px;background:#bdbdbd;color:#fff;font-size:16px;font-weight:700}
+.next.ready{background:#ed4b91;cursor:pointer}
+.note{font-size:11px;color:#999;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="phone">
+<header>জমা দিন</header>
+<main>
+  <div class="section-title">পেমেন্ট পদ্ধতি নির্বাচন করুন</div>
+  <div class="payments">
+    <button class="pay" data-pay="bKash"><span class="brand-logo bk"><span class="bk-mark">b</span><span class="bk-word">Kash</span></span><small>bKash</small></button>
+    <button class="pay" data-pay="Nagad"><span class="brand-logo ng"><span class="ng-mark">✦</span><span class="ng-word">নগদ</span></span><small>Nagad</small></button>
+    <button class="pay" data-pay="Rocket"><span class="logo other">Rocket</span><small>Rocket</small></button>
+    <button class="pay" data-pay="Other"><span class="logo" style="background:#333">BANK</span><small>Bank</small></button>
+  </div>
+  <div class="usdt-row">
+    <button class="pay" data-pay="USDT"><span class="logo us">₮ USDT</span><small>USDT</small></button>
+  </div>
+
+  <div class="amount-title">জমার পরিমাণ নির্বাচন করুন</div>
+  <div class="amounts">
+    <button class="amount" data-amount="100">৳100</button>
+    <button class="amount" data-amount="200">৳200</button>
+    <button class="amount" data-amount="500">৳500</button>
+    <button class="amount" data-amount="1000">৳1,000</button>
+    <button class="amount" data-amount="2000">৳2,000</button>
+    <button class="amount" data-amount="3000">৳3,000</button>
+    <button class="amount" data-amount="5000">৳5,000</button>
+    <button class="amount" data-amount="10000">৳10,000</button>
+    <button class="amount" data-amount="20000">৳20,000</button>
+    <button class="amount" data-amount="50000">৳50,000</button>
+  </div>
+  <input class="custom" id="customAmount" type="number" min="100" max="50000" placeholder="অথবা পরিমাণ লিখুন (৳100 - ৳50,000)">
+  <p class="warning">সতর্কতা: টাকা জমা দেওয়ার আগে পেমেন্ট পদ্ধতি ও পরিমাণ ভালোভাবে যাচাই করুন। ভুল তথ্য দিলে জমা সম্পন্ন হতে সমস্যা হতে পারে।</p>
+  <button class="next" id="next" disabled>পরবর্তী</button>
+  <div class="note">DJ77 · Deposit</div>
+</main>
+</div>
+<script>
+let selectedPay="", selectedAmount="";
+const payButtons=[...document.querySelectorAll(".pay")];
+const amountButtons=[...document.querySelectorAll(".amount")];
+const custom=document.getElementById("customAmount"), next=document.getElementById("next");
+function refresh(){next.disabled=!(selectedPay && Number(selectedAmount)>=100 && Number(selectedAmount)<=50000);next.classList.toggle("ready",!next.disabled)}
+payButtons.forEach(b=>b.addEventListener("click",()=>{payButtons.forEach(x=>x.classList.remove("selected"));b.classList.add("selected");selectedPay=b.dataset.pay;refresh()}));
+amountButtons.forEach(b=>b.addEventListener("click",()=>{amountButtons.forEach(x=>x.classList.remove("selected"));b.classList.add("selected");selectedAmount=b.dataset.amount;custom.value="";refresh()}));
+custom.addEventListener("input",()=>{amountButtons.forEach(x=>x.classList.remove("selected"));selectedAmount=custom.value;refresh()});
+next.addEventListener("click",()=>{if(!next.disabled)alert("পদ্ধতি: "+selectedPay+" | পরিমাণ: ৳"+selectedAmount+"\nএটি শুধু UI ডেমো; পেমেন্ট এখনো যুক্ত করা হয়নি।")});
+</script>
+</body>
+</html>
