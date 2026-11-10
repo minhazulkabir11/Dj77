@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DJ77 — লগইন</title>
+<style>
+:root{--gold:#ffc94b;--gold2:#f5a900;--ink:#171717;--muted:#6e7d87}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,"Noto Sans Bengali",sans-serif;background:#000000;color:#222}
+header{background:#1565c0;padding:18px 16px;border-bottom:1px solid #0d47a1;display:flex;align-items:center;justify-content:center}
+.logo{font-weight:1000;font-size:38px;letter-spacing:-2px;color:#f6ad00;text-shadow:1px 2px 0 #8b3900,0 0 8px #ffd45b}
+main{max-width:430px;margin:26px auto;padding:0 16px}
+.card{background:#1565c0;border:1px solid #64b5f6;border-radius:18px;padding:24px 20px;box-shadow:0 8px 24px #0000000b}
+h1{text-align:center;margin:0 0 8px;font-size:25px;color:#fff}
+.sub{text-align:center;color:#e3f2fd;font-size:14px;margin:0 0 24px}
+label{display:block;font-size:14px;font-weight:700;color:#fff;margin:15px 0 7px}
+input{width:100%;padding:14px;border:1px solid #cbd2d7;border-radius:10px;font-size:16px;outline:none}
+input:focus{border-color:#eeb52e;box-shadow:0 0 0 3px #ffc94b33}
+button{width:100%;margin-top:22px;border:0;border-radius:28px;padding:14px;background:linear-gradient(100deg,#fff36b,#ffbd3e);font-size:18px;font-weight:800;color:#332600;cursor:pointer}
+.links{display:flex;justify-content:space-between;gap:10px;margin-top:16px;font-size:14px}
+a{color:#fff3b0;text-decoration:none}.note{font-size:12px;color:#c7d2da;text-align:center;margin:22px 4px 0;line-height:1.6}
+.notice{display:none;margin-top:14px;padding:11px;border-radius:9px;background:#fff5d8;color:#674900;font-size:13px}
+@media(max-width:360px){.logo{font-size:32px}.card{padding:20px 16px}}
+</style>
+
+<style>
+.register-link{display:block;text-align:center;margin:16px auto 6px;color:#78c5ff;
+font-weight:700;text-decoration:none}
+.register-link:hover{text-decoration:underline;color:#fff}
+</style>
+
+</head>
+<body>
+<header><div class="logo">DJ77</div></header>
+<main>
+<section class="card">
+<h1>লগইন করুন</h1>
+<p class="sub">আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
+<form id="loginForm">
+<label for="username">মোবাইল নম্বর / ইউজারনেম</label>
+<input id="username" name="username" autocomplete="username" placeholder="আপনার মোবাইল নম্বর বা ইউজারনেম" required>
+<label for="password">পাসওয়ার্ড</label>
+<input id="password" name="password" type="password" minlength="6" autocomplete="current-password" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" required>
+<button type="submit">লগইন</button>
+<div class="notice" id="notice">এটি একটি ডিজাইন ডেমো। প্রকৃত লগইনের জন্য নিরাপদ ব্যাকএন্ড/API সংযোগ করতে হবে।</div>
+</form>
+<div class="links"><a href="dj77-register.html" class="register-link">নতুন অ্যাকাউন্ট খুলুন</a><a href="#" onclick="alert('পাসওয়ার্ড রিসেট ফিচার পরে যুক্ত করা যাবে।');return false">পাসওয়ার্ড ভুলে গেছেন?</a></div>
+</section>
+<p class="note">নিরাপত্তার জন্য আপনার পাসওয়ার্ড কারও সঙ্গে শেয়ার করবেন না। এই পেজটি শুধু ফ্রন্টএন্ড নমুনা; কোনো তথ্য সংরক্ষণ বা সার্ভারে পাঠায় না।</p>
+</main>
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  if (!username || !password) return;
+  if (password.length < 6) { document.getElementById('notice').textContent = 'পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।'; document.getElementById('notice').style.display = 'block'; return; }
+  const saved = JSON.parse(localStorage.getItem('dj77_demo_account') || 'null');
+  if (!saved) { document.getElementById('notice').textContent = 'আগে একটি অ্যাকাউন্ট খুলুন।'; document.getElementById('notice').style.display = 'block'; return; }
+  if (saved.username !== username || saved.password !== password) { document.getElementById('notice').textContent = 'ইউজারনেম বা পাসওয়ার্ড সঠিক নয়।'; document.getElementById('notice').style.display = 'block'; return; }
+  sessionStorage.setItem('dj77_logged_in', 'yes');
+  window.location.href = 'dj77-homepage.html';
+});
+</script>
+</body>
+</html>
