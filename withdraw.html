@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DJ77 — ওয়ালেট</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f5;color:#222;font-family:system-ui,"Noto Sans Bengali",sans-serif}
+header{height:86px;background:#ffdc55;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:25px;font-weight:800}
+header button{border:0;background:transparent;font-size:30px;color:#222}
+main{max-width:620px;margin:auto;padding:16px 14px 100px}
+h2{font-size:21px;font-weight:600;margin:20px 4px}
+.balance{background:#fff;border-radius:12px;padding:16px;margin:12px 0 22px;box-shadow:0 1px 5px #0001}
+.balance small{color:#777}.balance strong{display:block;font-size:25px;margin-top:5px}
+.wallet{background:linear-gradient(110deg,#8d5be8,#1bc9c2);color:#fff;border-radius:18px;padding:20px;margin:14px 0;min-height:150px;position:relative;box-shadow:0 3px 10px #0002}
+.wallet .provider{font-size:22px}.wallet .number{font-size:25px;font-weight:800;margin:12px 0}
+.wallet .remove{position:absolute;right:12px;top:12px;border:0;border-radius:50%;width:30px;height:30px;background:#ffffff55;color:white;font-size:18px}
+.addrow{border-top:1px solid #ddd;margin-top:28px;padding-top:20px;display:flex;align-items:center;justify-content:space-between;color:#777}
+.plus{width:66px;height:66px;border:0;border-radius:50%;background:#ff0808;color:white;font-size:42px;box-shadow:0 3px 8px #0002}
+.note{background:#fff8d8;color:#765b00;border-radius:10px;padding:12px;font-size:14px;line-height:1.6;margin-top:22px}
+.back{border:0;background:transparent;font-size:17px;color:#333}
+.modal{display:none;position:fixed;inset:0;background:#0009;align-items:center;justify-content:center;padding:18px}
+.panel{width:min(420px,100%);background:white;border-radius:16px;padding:20px}
+.panel h3{margin:0 0 16px;font-size:22px}
+label{display:block;margin:12px 0 5px;color:#555}
+input,select{width:100%;padding:13px;border:1px solid #bbb;border-radius:9px;font:inherit;background:white}
+.save{width:100%;padding:13px;margin-top:18px;border:0;border-radius:25px;background:#ffcf35;font-weight:800;font-size:17px}
+.cancel{width:100%;padding:11px;margin-top:8px;border:0;background:#eee;border-radius:25px}
+.empty{text-align:center;color:#888;background:#fff;padding:25px;border-radius:12px}
+</style></head>
+<body>
+<header><button onclick="location.href='dj77-homepage.html'">‹</button><span>উত্তোলন ওয়ালেট</span><span>▤</span></header>
+<main>
+<div class="balance"><small>ওয়ালেট ব্যালেন্স (ডেমো)</small><strong>৳ 0.00</strong></div>
+<h2>আমার ওয়ালেট</h2>
+<div id="walletList"></div>
+<div class="addrow"><span>নতুন ওয়ালেট যোগ করুন</span><button class="plus" onclick="showForm()">＋</button></div>
+<div class="note">নিজের বিকাশ, নগদ বা রকেট নম্বর এখানে সংরক্ষণ করতে পারবেন। এটি শুধু নম্বর সংরক্ষণের ডেমো; এখানে কোনো টাকা পাঠানো বা উত্তোলন হয় না। PIN বা OTP দেবেন না।</div>
+</main>
+<div class="modal" id="modal"><div class="panel">
+<h3>নতুন ওয়ালেট যোগ করুন</h3>
+<label for="provider">পেমেন্ট মাধ্যম</label>
+<select id="provider"><option value="বিকাশ">বিকাশ</option><option value="নগদ">নগদ</option><option value="রকেট">রকেট</option></select>
+<label for="walletNumber">মোবাইল নম্বর</label>
+<input id="walletNumber" type="tel" inputmode="numeric" maxlength="15" placeholder="যেমন: 01XXXXXXXXX">
+<button class="save" onclick="saveWallet()">ওয়ালেট সংরক্ষণ করুন</button>
+<button class="cancel" onclick="hideForm()">বাতিল</button>
+</div></div>
+<script>
+const KEY='dj77_demo_wallets';
+function getWallets(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}}
+function render(){const list=document.getElementById('walletList'),items=getWallets();if(!items.length){list.innerHTML='<div class="empty">এখনো কোনো ওয়ালেট যোগ করা হয়নি।<br>＋ বাটনে চাপ দিয়ে নম্বর যোগ করুন।</div>';return}
+list.innerHTML=items.map((w,i)=>`<div class="wallet"><button class="remove" onclick="removeWallet(${i})">×</button><div class="provider">▣ ${safe(w.provider)}</div><div class="number">${safe(w.number)}</div><small>আপনার সংরক্ষিত ওয়ালেট</small></div>`).join('')}
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showForm(){document.getElementById('modal').style.display='flex'}
+function hideForm(){document.getElementById('modal').style.display='none'}
+function saveWallet(){const provider=document.getElementById('provider').value,number=document.getElementById('walletNumber').value.trim();if(!/^01[0-9]{9}$/.test(number)){alert('সঠিক ১১ সংখ্যার বাংলাদেশি মোবাইল নম্বর লিখুন।');return}
+const items=getWallets();if(items.some(w=>w.number===number&&w.provider===provider)){alert('এই ওয়ালেটটি আগে থেকেই যোগ করা আছে।');return}
+items.push({provider,number});localStorage.setItem(KEY,JSON.stringify(items));document.getElementById('walletNumber').value='';hideForm();render()}
+function removeWallet(i){if(confirm('এই ওয়ালেটটি মুছে ফেলবেন?')){const items=getWallets();items.splice(i,1);localStorage.setItem(KEY,JSON.stringify(items));render()}}
+render();
+</script></body></html>
