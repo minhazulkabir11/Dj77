@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DJ77 — হোম</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#000;color:#f4f7fb;font-family:system-ui,"Noto Sans Bengali",sans-serif}
+header{background:#0755a5;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 2px 12px #006eff55}
+.brand{font-size:30px;font-weight:1000;letter-spacing:-1px;color:#ffd04d;text-shadow:1px 2px #6b3500}
+.profile{text-align:right;font-size:13px;color:#eaf4ff}.avatar{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#d8ecff;color:#0755a5;font-size:23px;vertical-align:middle;margin-left:7px}
+.actions{display:flex;gap:10px;padding:12px;background:#061b32}
+.actions button{flex:1;border:0;border-radius:24px;padding:12px 7px;font-size:16px;font-weight:800;background:linear-gradient(100deg,#fff16c,#ffbd3e);color:#382900}
+.actions button.secondary{background:#0d3760;color:#e7f4ff;border:1px solid #67b8ff}
+.banner{margin:10px;border-radius:13px;min-height:155px;padding:20px 16px;background:radial-gradient(circle at 15% 50%,#1a8de7,transparent 40%),linear-gradient(120deg,#071a32,#063c78 55%,#090d18);border:1px solid #2489d9;display:flex;align-items:center;justify-content:space-between;overflow:hidden}
+.banner .art{font-size:65px;filter:drop-shadow(0 5px 8px #000)}.banner h1{font-size:23px;margin:0;color:#ffd34f;text-shadow:1px 2px #542800}.banner p{margin:5px 0 0;font-size:14px;color:#fff}
+.ticker{white-space:nowrap;overflow:hidden;background:#092b4d;color:#ffe27b;padding:9px 12px;font-size:13px;border-block:1px solid #145b95}
+main{padding:8px 10px 92px}.cats{display:flex;gap:9px;overflow:auto;padding:10px 0}.cat{min-width:75px;text-align:center;color:#c7d9e9;font-size:13px;cursor:pointer}.cat .ico{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 5px;border-radius:50%;background:#102b46;border:1px solid #2369a5;font-size:27px}.cat.active .ico{background:linear-gradient(140deg,#ffe96a,#ffb52e);color:#161616;border:2px solid #fff0a0}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:9px 2px 12px}.sectionhead h2{font-size:18px;margin:0}.sectionhead span{font-size:12px;color:#91bce2}
+.games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.game{min-width:0;background:#071a2c;border:1px solid #174d7a;border-radius:12px;padding:7px;text-align:center;position:relative}
+.cover{height:104px;border-radius:8px;display:grid;place-items:center;font-size:42px;font-weight:900;color:#fff;text-shadow:1px 2px #000;background:radial-gradient(circle at 30% 20%,#ffda62,#a64b00 42%,#111d38 80%);overflow:hidden}
+.game:nth-child(3n+2) .cover{background:radial-gradient(circle at 30% 20%,#fa648a,#721633 45%,#111d38 85%)}
+.game:nth-child(3n) .cover{background:radial-gradient(circle at 30% 20%,#6ee7ff,#1752a2 45%,#10172e 85%)}
+.game strong{display:block;font-size:13px;color:#ffd16b;margin-top:7px}.game small{display:block;color:#d6e5f4;font-size:12px}
+.star{position:absolute;right:10px;top:9px;background:#061323aa;border:0;color:#ffe16a;font-size:19px;border-radius:50%;cursor:pointer}
+.play{margin-top:7px;width:100%;border:0;border-radius:16px;padding:7px;background:#0d65b7;color:white;font-weight:700;cursor:pointer}
+footer{position:fixed;bottom:0;left:0;right:0;background:#061a2d;border-top:1px solid #1d5c8e;display:flex;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom));z-index:5}
+footer button{background:none;border:0;color:#b9d5ed;font-size:11px;display:grid;gap:2px;justify-items:center}footer b{font-size:21px}
+.toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%);background:#e9f5ff;color:#082440;padding:10px 14px;border-radius:10px;display:none;z-index:8;font-size:13px;box-shadow:0 4px 20px #000}
+@media(min-width:650px){main{max-width:760px;margin:auto}.banner{min-height:210px}.cover{height:145px}}
+</style></head>
+<body>
+<header><div class="brand">DJ77</div><div class="profile">স্বাগতম, <span id="playerName">Player</span> <button onclick="logout()" style="background:#0d3760;color:#fff;border:1px solid #67b8ff;border-radius:14px;padding:5px 9px">লগআউট</button><span class="avatar">👤</span></div></header>
+<div class="actions"><button onclick="window.location.href='deposit.html'">▣　ডিপোজিট</button><button class="secondary" onclick="msg('ডেমো হোমপেজে টাকা জমা বা উত্তোলনের ব্যবস্থা চালু নেই।')">⇩　উত্তোলন</button></div>
+<section class="banner"><div><h1>DJ77 গেমিং জোন</h1><p>আপনার পছন্দের গেম খুঁজে নিন</p></div><div class="art">🎮</div></section>
+<div class="ticker">📢　DJ77-এ স্বাগতম! নতুন গেম ও আপডেট দেখতে ক্যাটাগরি বেছে নিন।</div>
+<main>
+<div class="cats" id="cats">
+<div class="cat active" data-cat="সব"><div class="ico">🔥</div>সব গেম</div>
+<div class="cat" data-cat="প্রিয়"><div class="ico">♥</div>আমার প্রিয়</div>
+<div class="cat" data-cat="স্লট"><div class="ico">🎰</div>স্লট</div>
+<div class="cat" data-cat="অ্যাডভেঞ্চার"><div class="ico">✈</div>অ্যাডভেঞ্চার</div>
+<div class="cat" data-cat="আর্কেড"><div class="ico">🕹</div>আর্কেড</div>
+</div>
+<div class="sectionhead"><h2>জনপ্রিয় গেম</h2><span>ডেমো গেম তালিকা</span></div>
+<div class="games" id="games">
+<article class="game" data-cat="স্লট"><button class="star" aria-label="প্রিয়তে যোগ">☆</button><div class="cover">👑</div><strong>Golden Crown</strong><small>স্লট</small><button class="play" onclick="msg('Golden Crown — গেমটি পরে যুক্ত করা হবে।')">খেলুন</button></article>
+<article class="game" data-cat="অ্যাডভেঞ্চার"><button class="star">☆</button><div class="cover">✈️</div><strong>Sky Journey</strong><small>অ্যাডভেঞ্চার</small><button class="play" onclick="msg('Sky Journey — গেমটি পরে যুক্ত করা হবে।')">খেলুন</button></article>
+<article class="game" data-cat="স্লট"><button class="star">☆</button><div class="cover">💎</div><strong>Magic Gems</strong><small>স্লট</small><button class="play" onclick="msg('Magic Gems — গেমটি পরে যুক্ত করা হবে।')">খেলুন</button></article>
+<article class="game" data-cat="আর্কেড"><button class="star">☆</button><div class="cover">🥊</div><strong>Boxing Hero</strong><small>আর্কেড</small><button class="play" onclick="msg('Boxing Hero — গেমটি পরে যুক্ত করা হবে।')">খেলুন</button></article>
+<article class="game" data-cat="অ্যাডভেঞ্চার"><button class="star">☆</button><div class="cover">🏜️</div><strong>Wild Quest</strong><small>অ্যাডভেঞ্চার</small><button class="play" onclick="msg('Wild Quest — গেমটি পরে যুক্ত করা হবে।')">খেলুন</button></article>
+<article class="game" data-cat="আর্কেড"><button class="star">☆</button><div class="cover">🚀</div><strong>Rocket Run</strong><small>আর্কেড</small><button class="play" onclick="msg('Rocket Run — গেমটি পরে যুক্ত করা হবে।')">খেলুন</button></article>
+</div></main>
+<footer><button onclick="msg('সাহায্য বিভাগ পরে যুক্ত করা যাবে।')"><b>☏</b>সেবা</button><button onclick="msg('প্রমোশন বিভাগ পরে যুক্ত করা যাবে।')"><b>🎁</b>প্রমোশন</button><button onclick="window.scrollTo({top:0,behavior:'smooth'})"><b>🏠</b>হোম</button><button onclick="msg('আমন্ত্রণ বিভাগ পরে যুক্ত করা যাবে।')"><b>♧</b>আমন্ত্রণ</button><button onclick="msg('সদস্য প্রোফাইল পরে যুক্ত করা যাবে।')"><b>👤</b>সদস্য</button></footer>
+<div class="toast" id="toast"></div>
+<script>
+const savedAccount = JSON.parse(localStorage.getItem('dj77_demo_account') || 'null');
+const loggedIn = sessionStorage.getItem('dj77_logged_in') === 'yes';
+if (!savedAccount || !loggedIn) { location.replace('index.html'); }
+else { document.getElementById('playerName').textContent = savedAccount.username; }
+function logout(){ sessionStorage.removeItem('dj77_logged_in'); location.replace('index.html'); }
+let favorites=new Set();
+function msg(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(window.tm);window.tm=setTimeout(()=>e.style.display='none',2600)}
+document.querySelectorAll('.star').forEach((b,i)=>b.addEventListener('click',()=>{if(favorites.has(i)){favorites.delete(i);b.textContent='☆'}else{favorites.add(i);b.textContent='★'};if(document.querySelector('.cat.active').dataset.cat==='প্রিয়')filter('প্রিয়')}));
+function filter(cat){document.querySelectorAll('.cat').forEach(c=>c.classList.toggle('active',c.dataset.cat===cat));document.querySelectorAll('.game').forEach((g,i)=>g.style.display=(cat==='সব'||(cat==='প্রিয়'?favorites.has(i):g.dataset.cat===cat))?'':'none')}
+document.querySelectorAll('.cat').forEach(c=>c.addEventListener('click',()=>filter(c.dataset.cat)));
+</script></body></html>
