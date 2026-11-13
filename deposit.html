@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>জমা দিন - Voucher Center</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Bengali -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Hind Siliguri', 'Segoe UI', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#ffc107',
+                            orange: '#ff9800',
+                            red: '#e53935',
+                            nagad: '#F7921E',
+                            nagadRed: '#e53935',
+                            darkGreen: '#006a4e'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .active-payment-card {
+            border-color: #e53935 !important;
+            background-color: #fff9f9 !important;
+        }
+        .active-payment-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 16px 16px;
+            border-color: transparent transparent #e53935 transparent;
+        }
+        .active-payment-card::before {
+            content: '✓';
+            position: absolute;
+            bottom: -2px;
+            right: 1px;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 10;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen flex justify-center items-center p-0 md:p-4">
+
+    <!-- Main Mobile Frame Container -->
+    <div class="w-full max-w-[480px] bg-white min-h-screen md:min-h-[840px] md:rounded-3xl shadow-2xl flex flex-col justify-between overflow-hidden relative">
+
+        <!-- ================= PAGE 1: DEPOSIT SELECTION ================= -->
+        <div id="page1" class="flex flex-col justify-between min-h-full w-full">
+            <div>
+                <!-- Top Navigation Header -->
+                <header class="bg-brand-gold px-4 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+                    <button class="text-gray-900 text-2xl font-bold p-1 hover:bg-black/5 rounded-full transition leading-none">
+                        &lt;
+                    </button>
+                    
+                    <h1 class="text-xl font-bold text-gray-900 tracking-wide text-center flex-1">জমা দিন</h1>
+
+                    <div class="relative cursor-pointer hover:opacity-90 transition" id="supportBtn">
+                        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                        </div>
+                        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white">1</span>
+                    </div>
+                </header>
+
+                <!-- Form Content -->
+                <main class="p-4 space-y-5">
+                    
+                    <!-- Section 1: Deposit Method -->
+                    <section>
+                        <div class="flex items-center space-x-1.5 mb-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-brand-orange inline-block"></span>
+                            <h2 class="text-sm font-bold text-gray-800">আমানতের মোড</h2>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-2.5" id="paymentGrid">
+                            <!-- Send Money Nagad -->
+                            <div class="payment-card border border-gray-200 rounded-xl p-2 text-center cursor-pointer transition relative bg-white flex flex-col items-center justify-between min-h-[90px]" data-method="Send Money Nagad">
+                                <div class="absolute top-0 left-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded-tl-xl rounded-br-lg font-bold flex items-center">
+                                    👍
+                                </div>
+                                <div class="w-10 h-10 mt-2 flex items-center justify-center">
+                                    <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none">
+                                        <rect width="100" height="100" rx="20" fill="#F7921E"/>
+                                        <path d="M22 68C22 45 42 22 75 22C60 38 65 52 78 68H22Z" fill="#ED1C24"/>
+                                        <circle cx="50" cy="50" r="12" fill="#FFFFFF"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[11px] font-semibold text-gray-700 leading-tight mt-1">Send Money Nagad</span>
+                            </div>
+
+                            <!-- NAGAD (Active by default) -->
+                            <div class="payment-card active-payment-card border-2 border-red-500 rounded-xl p-2 text-center cursor-pointer transition relative bg-white flex flex-col items-center justify-between min-h-[90px]" data-method="NAGAD">
+                                <div class="absolute top-0 left-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded-tl-xl rounded-br-lg font-bold flex items-center">
+                                    👍
+                                </div>
+                                <div class="w-10 h-10 mt-2 flex items-center justify-center">
+                                    <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none">
+                                        <rect width="100" height="100" rx="20" fill="#F7921E"/>
+                                        <path d="M22 68C22 45 42 22 75 22C60 38 65 52 78 68H22Z" fill="#ED1C24"/>
+                                        <circle cx="50" cy="50" r="12" fill="#FFFFFF"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[11px] font-bold text-red-600 leading-tight mt-1">NAGAD</span>
+                            </div>
+
+                            <!-- Send Money Bkash -->
+                            <div class="payment-card border border-gray-200 rounded-xl p-2 text-center cursor-pointer transition relative bg-white flex flex-col items-center justify-between min-h-[90px]" data-method="Send Money Bkash">
+                                <div class="absolute top-0 left-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded-tl-xl rounded-br-lg font-bold flex items-center">
+                                    👍
+                                </div>
+                                <div class="w-10 h-10 mt-2 flex items-center justify-center">
+                                    <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none">
+                                        <rect width="100" height="100" rx="20" fill="#E2136E"/>
+                                        <path d="M25 75L50 25L75 75H25Z" fill="#FFFFFF"/>
+                                        <path d="M50 40L65 70H35L50 40Z" fill="#E2136E"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[11px] font-semibold text-gray-700 leading-tight mt-1">Send Money Bkash</span>
+                            </div>
+
+                            <!-- Bkash -->
+                            <div class="payment-card border border-gray-200 rounded-xl p-2 text-center cursor-pointer transition relative bg-white flex flex-col items-center justify-between min-h-[90px]" data-method="Bkash">
+                                <div class="absolute top-0 left-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded-tl-xl rounded-br-lg font-bold flex items-center">
+                                    👍
+                                </div>
+                                <div class="w-10 h-10 mt-2 flex items-center justify-center">
+                                    <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none">
+                                        <rect width="100" height="100" rx="20" fill="#E2136E"/>
+                                        <path d="M25 75L50 25L75 75H25Z" fill="#FFFFFF"/>
+                                        <path d="M50 40L65 70H35L50 40Z" fill="#E2136E"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[11px] font-semibold text-gray-700 leading-tight mt-1">Bkash</span>
+                            </div>
+
+                            <!-- USDT -->
+                            <div class="payment-card border border-gray-200 rounded-xl p-2 text-center cursor-pointer transition relative bg-white flex flex-col items-center justify-between min-h-[90px]" data-method="USDT">
+                                <div class="absolute top-0 left-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded-tl-xl rounded-br-lg font-bold flex items-center">
+                                    👍
+                                </div>
+                                <div class="w-10 h-10 mt-2 flex items-center justify-center">
+                                    <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none">
+                                        <circle cx="50" cy="50" r="45" fill="#26A17B"/>
+                                        <path d="M30 38H70V46H56V72H44V46H30V38Z" fill="white"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[11px] font-semibold text-gray-700 leading-tight mt-1">USDT</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 2: Deposit Amount -->
+                    <section>
+                        <div class="flex items-center space-x-1.5 mb-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-brand-orange inline-block"></span>
+                            <h2 class="text-sm font-bold text-gray-800">জমা পরিমাণ</h2>
+                        </div>
+
+                        <!-- Preset Amount Buttons Grid -->
+                        <div class="grid grid-cols-5 gap-2 mb-3" id="amountPresetGrid">
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="100">100</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="200">200</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="300">300</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="500">500</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="1000">1,000</button>
+
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="2000">2,000</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="3000">3,000</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="5000">5,000</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="10000">10,000</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="20000">20,000</button>
+
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="30000">30,000</button>
+                            <button class="amount-btn border border-gray-200 rounded-lg py-2 text-xs font-semibold text-gray-800 hover:border-brand-orange transition" data-value="50000">50,000</button>
+                        </div>
+
+                        <!-- Custom Input Field -->
+                        <div class="relative flex items-center">
+                            <span class="absolute left-3.5 text-gray-700 font-bold text-base">৳</span>
+                            <input 
+                                type="number" 
+                                id="amountInput" 
+                                placeholder="100 - 50,000" 
+                                min="100" 
+                                max="50000"
+                                class="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition"
+                            />
+                        </div>
+                    </section>
+
+                    <!-- Section 3: Warning Notice Box -->
+                    <section class="bg-red-50/60 border border-dashed border-red-300 rounded-xl p-3 text-xs text-red-600 leading-relaxed shadow-sm">
+                        <span class="font-bold text-red-700">জমা তথ্য:</span> 
+                        ⚠️ নতুন অর্ডার তৈরি হওয়ার পর সঠিক পরিমাণে (ন্যূনতম ১০০) পেমент করুন। পুরনো অর্ডার বা ভুল পরিমাণের পেমেন্ট স্বয়ংক্রিয়ভাবে প্রক্রিয়া হয় না এবং অর্থ হারানোর ঝুঁকি রয়েছে। ⚠️
+                    </section>
+
+                    <!-- Section 4: Promotions / Activity -->
+                    <section class="pt-1">
+                        <div class="flex items-center space-x-1.5 mb-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-brand-orange inline-block"></span>
+                            <h2 class="text-sm font-bold text-gray-800">কার্যক্রম</h2>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-xs flex justify-between items-center">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="bonusOption" checked class="accent-orange-500 w-4 h-4">
+                                <span class="text-gray-700 font-medium">প্রথম রিচার্জ বোনাস(1/1)</span>
+                            </label>
+                            <span class="font-bold text-gray-500">≥ ৳ 100.00</span>
+                        </div>
+                    </section>
+                </main>
+            </div>
+
+            <!-- Bottom Action Button -->
+            <footer class="bg-white border-t border-gray-100 p-3.5 z-20">
+                <button 
+                    id="submitBtn" 
+                    class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3.5 rounded-lg text-base shadow-md transition-all duration-200 active:scale-[0.99]"
+                >
+                    পরবর্তী
+                </button>
+            </footer>
+        </div>
+
+        <!-- ================= PAGE 2: PAYMENT CONFIRMATION / CASH OUT DETAILS ================= -->
+        <div id="page2" class="hidden flex-col justify-between min-h-full w-full bg-white">
+            <div class="w-full">
+                <!-- Dark Green Header Banner -->
+                <header class="bg-[#006547] text-white px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow">
+                    <div class="flex flex-col">
+                        <div class="flex items-baseline space-x-1">
+                            <span class="text-xl font-extrabold tracking-wide" id="displayBdtHeader">BDT 200</span>
+                        </div>
+                        <span class="text-[11px] text-emerald-100 font-medium">কম বা বেশি করবেন না সেন্ড মানি</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <!-- Cancel Button Pill -->
+                        <button id="cancelBtn" class="bg-black/30 hover:bg-black/40 text-white text-xs px-3 py-1.5 rounded-full flex items-center space-x-1.5 transition">
+                            <span>বাতিল করুন</span>
+                            <span class="font-bold text-sm">✕</span>
+                        </button>
+
+                        <!-- Language Selector -->
+                        <div class="bg-gray-200 text-gray-800 text-[10px] rounded flex overflow-hidden font-bold">
+                            <span class="px-1.5 py-0.5 bg-gray-300 text-gray-600">EN</span>
+                            <span class="px-1.5 py-0.5 bg-white text-black">বাং</span>
+                        </div>
+                    </div>
+                </header>
+
+                <main class="p-4 space-y-4">
+                    <!-- Red Warning Text -->
+                    <div class="text-red-600 font-bold text-xs leading-relaxed">
+                        আপনি যদি টাকার পরিমাণ পরিবর্তন করেন (<span id="displayBdtWarning">BDT 200</span>), আপনি ক্রেডিট পেতে সক্ষম হবেন না।
+                    </div>
+
+                    <!-- Nagad Deposit Banner Box -->
+                    <div class="bg-[#f04438] text-white rounded-xl p-3.5 flex items-center space-x-3 shadow-md">
+                        <div class="w-11 h-11 bg-white rounded-full flex items-center justify-center p-1 shrink-0">
+                            <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none">
+                                <rect width="100" height="100" rx="20" fill="#F7921E"/>
+                                <path d="M22 68C22 45 42 22 75 22C60 38 65 52 78 68H22Z" fill="#ED1C24"/>
+                                <circle cx="50" cy="50" r="12" fill="#FFFFFF"/>
+                            </svg>
+                        </div>
+                        <span class="text-lg font-extrabold tracking-wide" id="methodBannerText">নগদ Deposit</span>
+                    </div>
+
+                    <!-- Wallet Number Section -->
+                    <div class="space-y-1.5">
+                        <label class="block text-sm font-bold text-gray-900">
+                            Wallet No<span class="text-red-500">*</span>
+                        </label>
+                        <p class="text-xs text-gray-600" id="walletNoteText">এই নগদ নাম্বারে শুধুমাত্র সেন্ড মানি গ্রহণ করা হয়</p>
+
+                        <!-- Copy Number Box -->
+                        <div class="bg-gray-100 border border-gray-200 rounded-lg px-4 py-3 flex items-center justify-between mt-1">
+                            <span class="text-base font-bold text-gray-800 tracking-wider" id="walletNumber">01987145193</span>
+                            <button id="copyWalletBtn" class="text-emerald-700 hover:text-emerald-900 transition focus:scale-95" title="Copy Number">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TrxID Input Section -->
+                    <div class="space-y-1.5 pt-1">
+                        <label class="block text-xs font-bold text-gray-900">
+                            ক্যাশআউটের TrxID নাম্বারটি লিখুন<span class="text-red-500 font-normal">(প্রয়োজন)</span>
+                        </label>
+                        <div class="border-2 border-red-500 rounded-lg overflow-hidden">
+                            <input 
+                                type="text" 
+                                id="trxInput" 
+                                placeholder="TrxID অবশ্যই পূরণ করতে হবে!" 
+                                class="w-full px-3.5 py-3 text-xs text-gray-800 placeholder-gray-400 focus:outline-none"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Confirm Button -->
+                    <button 
+                        id="confirmTrxBtn" 
+                        class="w-full border-2 border-gray-800 rounded-lg py-3 text-sm font-bold text-gray-900 hover:bg-gray-900 hover:text-white transition duration-200"
+                    >
+                        নিশ্চিত
+                    </button>
+
+                    <!-- Pictogram App Features Section -->
+                    <div class="bg-red-50/40 rounded-xl p-3 border border-red-100">
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <!-- Send Money Option -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center p-2.5 shadow-sm relative">
+                                    <svg class="w-full h-full text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-[10px] font-bold text-red-600 mt-1 flex items-center">
+                                    <span class="text-red-500 mr-0.5">➔</span> সেন্ড মানি
+                                </span>
+                            </div>
+
+                            <!-- Cash Out Option -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center p-2.5 shadow-sm">
+                                    <svg class="w-full h-full text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-[10px] text-gray-500 mt-1">ক্যাশ আউট</span>
+                            </div>
+
+                            <!-- Mobile Recharge Option -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center p-2.5 shadow-sm">
+                                    <svg class="w-full h-full text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-[10px] text-gray-500 mt-1">মোবাইল রিচার্জ</span>
+                            </div>
+
+                            <!-- Add Money Option -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center p-2.5 shadow-sm">
+                                    <svg class="w-full h-full text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-[10px] text-gray-500 mt-1">অ্যাড মানি</span>
+                            </div>
+                        </div>
+
+                        <!-- Highlighted Selected Mode -->
+                        <div class="text-center mt-3">
+                            <h3 class="text-base font-extrabold text-red-600">সেন্ড মানি</h3>
+                            <div class="text-xs text-gray-600 font-semibold mt-0.5">
+                                বাকি সময় <span class="text-red-600 font-bold" id="timer">07:30</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Warning Note -->
+                    <div class="text-[11px] text-gray-400 space-y-1 pt-1 pb-4 leading-normal">
+                        <div class="font-bold text-gray-800 text-xs">সতর্কতা:</div>
+                        <p class="text-red-500 font-bold">লেনদেন আইডি সঠিকভাবে পূরণ করতে হবে, অন্যথায় স্কোর ব্যর্থ হবে!</p>
+                        <p class="text-gray-400">
+                            অনুগ্রহ করে নিশ্চিত হয়ে নিন যে আপনি নগদ deposit ওয়ালেট নাম্বারে ক্যাশ আউট করছেন। এই নাম্বারের অন্য কোন ওয়ালেট থেকে ক্যাশ আউট করলে সেই টাকা পাওয়ার কোন সম্ভাবনা নাই।
+                        </p>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Shared Toast Notification -->
+        <div id="toast" class="hidden absolute top-16 left-1/2 transform -translate-x-1/2 bg-gray-900/90 text-white text-xs px-4 py-2.5 rounded-full shadow-lg z-50 text-center transition-all duration-300 max-w-[85%]">
+            <span id="toastMsg"></span>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Elements Page 1
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const paymentGrid = document.getElementById('paymentGrid');
+            const paymentCards = paymentGrid.querySelectorAll('.payment-card');
+            const amountBtns = document.querySelectorAll('.amount-btn');
+            const amountInput = document.getElementById('amountInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const supportBtn = document.getElementById('supportBtn');
+
+            // Elements Page 2
+            const displayBdtHeader = document.getElementById('displayBdtHeader');
+            const displayBdtWarning = document.getElementById('displayBdtWarning');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const copyWalletBtn = document.getElementById('copyWalletBtn');
+            const walletNumber = document.getElementById('walletNumber');
+            const trxInput = document.getElementById('trxInput');
+            const confirmTrxBtn = document.getElementById('confirmTrxBtn');
+            const timerEl = document.getElementById('timer');
+            const methodBannerText = document.getElementById('methodBannerText');
+            const walletNoteText = document.getElementById('walletNoteText');
+
+            // Shared Toast
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+
+            let selectedPaymentMethod = 'NAGAD';
+            let currentAmount = 200; // Default amount
+            let timerInterval = null;
+
+            function showToast(message) {
+                toastMsg.textContent = message;
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 2500);
+            }
+
+            // Payment Cards Logic
+            paymentCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    paymentCards.forEach(c => {
+                        c.classList.remove('active-payment-card', 'border-2', 'border-red-500');
+                        c.classList.add('border', 'border-gray-200');
+                        const span = c.querySelector('span');
+                        if (span) span.classList.remove('text-red-600', 'font-bold');
+                    });
+
+                    card.classList.add('active-payment-card', 'border-2', 'border-red-500');
+                    card.classList.remove('border', 'border-gray-200');
+                    const selectedSpan = card.querySelector('span');
+                    if (selectedSpan) selectedSpan.classList.add('text-red-600', 'font-bold');
+
+                    selectedPaymentMethod = card.getAttribute('data-method');
+                });
+            });
+
+            // Amount Presets Logic
+            amountBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const val = btn.getAttribute('data-value');
+                    amountInput.value = val;
+                    currentAmount = parseInt(val, 10);
+
+                    amountBtns.forEach(b => b.classList.remove('border-brand-orange', 'text-brand-orange', 'bg-orange-50'));
+                    btn.classList.add('border-brand-orange', 'text-brand-orange', 'bg-orange-50');
+                });
+            });
+
+            // Highlight default preset 200
+            const default200Btn = Array.from(amountBtns).find(b => b.getAttribute('data-value') === '200');
+            if (default200Btn) default200Btn.click();
+
+            amountInput.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value, 10) || 0;
+                currentAmount = val;
+
+                amountBtns.forEach(b => {
+                    if (parseInt(b.getAttribute('data-value'), 10) === val) {
+                        b.classList.add('border-brand-orange', 'text-brand-orange', 'bg-orange-50');
+                    } else {
+                        b.classList.remove('border-brand-orange', 'text-brand-orange', 'bg-orange-50');
+                    }
+                });
+            });
+
+            // Start Countdown Timer
+            function startTimer(durationInSeconds) {
+                clearInterval(timerInterval);
+                let timer = durationInSeconds;
+                timerInterval = setInterval(() => {
+                    const minutes = parseInt(timer / 60, 10);
+                    const seconds = parseInt(timer % 60, 10);
+
+                    const displayM = minutes < 10 ? "0" + minutes : minutes;
+                    const displayS = seconds < 10 ? "0" + seconds : seconds;
+
+                    timerEl.textContent = `${displayM}:${displayS}`;
+
+                    if (--timer < 0) {
+                        clearInterval(timerInterval);
+                        timerEl.textContent = "00:00";
+                        showToast("সময় শেষ হয়ে গেছে! অনুগ্রহ করে পুনরায় চেষ্টা করুন।");
+                    }
+                }, 1000);
+            }
+
+            // Submit Page 1 -> Go to Page 2
+            submitBtn.addEventListener('click', () => {
+                const finalAmount = amountInput.value ? parseInt(amountInput.value, 10) : currentAmount;
+                if (!finalAmount || finalAmount < 100) {
+                    showToast('অনুগ্রহ করে ন্যূনতম ১০০ টাকা নির্বাচন বা ইনপুট করুন।');
+                    return;
+                }
+
+                // Update Page 2 dynamically
+                displayBdtHeader.textContent = `BDT ${finalAmount}`;
+                displayBdtWarning.textContent = `BDT ${finalAmount}`;
+
+                if (selectedPaymentMethod.toLowerCase().includes('bkash')) {
+                    methodBannerText.textContent = 'বিকাশ Deposit';
+                    walletNoteText.textContent = 'এই বিকাশ নাম্বারে শুধুমাত্র সেন্ড মানি গ্রহণ করা হয়';
+                } else {
+                    methodBannerText.textContent = 'নগদ Deposit';
+                    walletNoteText.textContent = 'এই নগদ নাম্বারে শুধুমাত্র সেন্ড মানি গ্রহণ করা হয়';
+                }
+
+                // Switch Views
+                page1.classList.add('hidden');
+                page2.classList.remove('hidden');
+                page2.classList.add('flex');
+
+                // Start 7 min 30 sec timer
+                startTimer(450);
+            });
+
+            // Cancel Page 2 -> Go back to Page 1
+            cancelBtn.addEventListener('click', () => {
+                clearInterval(timerInterval);
+                page2.classList.add('hidden');
+                page2.classList.remove('flex');
+                page1.classList.remove('hidden');
+            });
+
+            // Copy Wallet Number to Clipboard
+            copyWalletBtn.addEventListener('click', () => {
+                const textToCopy = walletNumber.textContent.trim();
+                
+                // Safe Clipboard Copy
+                const el = document.createElement('textarea');
+                el.value = textToCopy;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+
+                showToast('নম্বর কপি হয়েছে: ' + textToCopy);
+            });
+
+            // Confirm TrxID Button
+            confirmTrxBtn.addEventListener('click', () => {
+                const trxVal = trxInput.value.trim();
+                if (!trxVal) {
+                    showToast('TrxID অবশ্যই পূরণ করতে হবে!');
+                    trxInput.focus();
+                } else {
+                    showToast('আপনার TrxID সফলভাবে গ্রহণ করা হয়েছে। যাচাই করা হচ্ছে...');
+                    setTimeout(() => {
+                        alert('পেমেন্ট সফলভাবে জমা নেওয়া হয়েছে! ধন্যবাদ।');
+                        cancelBtn.click();
+                        trxInput.value = '';
+                    }, 1500);
+                }
+            });
+
+            supportBtn.addEventListener('click', () => {
+                showToast('গ্রাহক সেবা কেন্দ্রে সংযোগ করা হচ্ছে...');
+            });
+        });
+    </script>
+</body>
+</html>
